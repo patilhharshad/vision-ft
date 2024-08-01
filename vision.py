@@ -59,8 +59,7 @@ def preprocess_image(image):
     # This might include resizing, normalization, etc.
     # Return a tensor of the preprocessed image
     preprocess = transforms.Compose([
-        transforms.Resize(224),  # Resize to 224x224
-        transforms.CenterCrop(224),  # Crop to 224x224
+        transforms.Resize((1024, 1024)),  # Resize to 1024x1024
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
