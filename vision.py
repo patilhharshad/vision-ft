@@ -21,7 +21,7 @@ def load_model():
     # )
 
     # Load tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    tokenizer = AutoTokenizer.from_pretrained(model_id, use_auth_token="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")
 
     # Load model with quantization
     model = PaliGemmaForConditionalGeneration.from_pretrained(
