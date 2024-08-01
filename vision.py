@@ -1,5 +1,6 @@
 import streamlit as st
-from transformers import AutoTokenizer, PaliGemmaForConditionalGeneration, BitsAndBytesConfig
+from transformers import AutoTokenizer
+from transformers import PaliGemmaForConditionalGeneration
 from PIL import Image
 import io
 import torch
