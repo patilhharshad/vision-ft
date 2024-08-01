@@ -20,15 +20,18 @@ def load_model():
     #     bnb_4bit_compute_dtype=torch.bfloat16
     # )
 
-    # Load tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-
     # Load model with quantization
     model = PaliGemmaForConditionalGeneration.from_pretrained(
         model_id, use_auth_token="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",
         # quantization_config=bnb_config,
         device_map="auto"
     )
+    
+    # Load tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(model_id, use_auth_token="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")
+
+    
+    
 
     return model, tokenizer
 
