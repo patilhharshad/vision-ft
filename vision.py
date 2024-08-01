@@ -4,6 +4,7 @@ from transformers import PaliGemmaForConditionalGeneration
 from PIL import Image
 import io
 import torch
+from torchvision import transforms
 
 # Set page title
 st.title("Image Captioning App")
@@ -13,26 +14,14 @@ st.title("Image Captioning App")
 def load_model():
     model_id = "harshad317/alt_text_long"
     
-    # Configure quantization
-    # bnb_config = BitsAndBytesConfig(
-    #     load_in_4bit=True,
-    #     bnb_4bit_use_double_quant=True,
-    #     bnb_4bit_quant_type="nf4",
-    #     bnb_4bit_compute_dtype=torch.bfloat16
-    # )
-
-    # Load model with quantization
+    # Load model
     model = PaliGemmaForConditionalGeneration.from_pretrained(
         model_id, use_auth_token="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",
-        # quantization_config=bnb_config,
         device_map="auto"
     )
     
     # Load tokenizer
     tokenizer = AutoTokenizer.from_pretrained(model_id, use_auth_token="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")
-
-    
-    
 
     return model, tokenizer
 
@@ -69,7 +58,13 @@ def preprocess_image(image):
     # Implement image preprocessing here
     # This might include resizing, normalization, etc.
     # Return a tensor of the preprocessed image
-    pass
+    preprocess = transforms.Compose([
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ])
+    return preprocess(image)
 
 # Create input fields
 input_text = st.text_input("Enter a long description for the given image")
