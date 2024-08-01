@@ -32,7 +32,7 @@ def generate_caption(input_text, input_image):
     try:
         # Prepare input
         image = input_image.convert('RGB')
-        inputs = tokenizer(input_text, return_tensors="pt").to(model.device)
+        inputs = tokenizer(input_text, return_tensors="pt", max_length=1024, truncation=True).to(model.device)
         
         # Process image
         pixel_values = preprocess_image(image).unsqueeze(0).to(model.device)
@@ -59,8 +59,8 @@ def preprocess_image(image):
     # This might include resizing, normalization, etc.
     # Return a tensor of the preprocessed image
     preprocess = transforms.Compose([
-        transforms.Resize(1024),  # Resize to 1024x1024
-        transforms.CenterCrop(1024),  # Crop to 1024x1024
+        transforms.Resize(224),  # Resize to 224x224
+        transforms.CenterCrop(224),  # Crop to 224x224
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
