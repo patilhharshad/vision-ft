@@ -1,12 +1,17 @@
 import streamlit as st
-from transformers import AutoTokenizer, PaliGemmaForConditionalGeneration, PaliGemmaProcessor
+from transformers import AutoTokenizer, PaliGemmaForConditionalGeneration, PaliGemmaProcessor, BitsAndBytesConfig
 from PIL import Image
 import requests
 import torch
 
 # Set up model and processor
 model_id_short = "harshad317/alt_text_short"  # Replace with your actual model ID
-model_short = PaliGemmaForConditionalGeneration.from_pretrained(model_id_short, torch_dtype=torch.bfloat16, use_auth_token = "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")
+bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_type=torch.bfloat16
+)
+model_short = PaliGemmaForConditionalGeneration.from_pretrained(model_id_short, torch_dtype=torch.bfloat16, use_auth_token = "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", quantization_config=bnb_config)
 processor_short = PaliGemmaProcessor.from_pretrained(model_id_short, use_auth_token = "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")
 
 # Set up device (GPU or CPU)
