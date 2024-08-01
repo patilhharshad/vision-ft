@@ -25,7 +25,7 @@ def load_model():
 
     # Load model with quantization
     model = PaliGemmaForConditionalGeneration.from_pretrained(
-        model_id, use_auth_token="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"
+        model_id, use_auth_token="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",
         # quantization_config=bnb_config,
         device_map="auto"
     )
